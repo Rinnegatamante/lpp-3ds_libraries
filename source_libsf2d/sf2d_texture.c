@@ -636,12 +636,30 @@ void sf2d_draw_quad_uv(const sf2d_texture *texture, float left, float top, float
 	GPU_DrawArray(GPU_TRIANGLE_STRIP, 0, 4);
 }
 
+// Grabbed from Citra Emulator (citra/src/video_core/utils.h)
+static inline u32 morton_interleave(u32 x, u32 y)
+{
+	u32 i = (x & 7) | ((y & 7) << 8); // ---- -210
+	i = (i ^ (i << 2)) & 0x1313;      // ---2 --10
+	i = (i ^ (i << 1)) & 0x1515;      // ---2 -1-0
+	i = (i | (i >> 7)) & 0x3F;
+	return i;
+}
+
+//Grabbed from Citra Emulator (citra/src/video_core/utils.h)
+static inline u32 get_morton_offset(u32 x, u32 y, u32 bytes_per_pixel)
+{
+	u32 i = morton_interleave(x, y);
+	unsigned int offset = (x & ~7) * 8;
+	return (i + offset) * bytes_per_pixel;
+}
+
 void sf2d_set_pixel(sf2d_texture *texture, int x, int y, u32 new_color)
 {
 	y = (texture->pow2_h - 1 - y);
 	if (texture->tiled) {
 		u32 coarse_y = y & ~7;
-		u32 offset = 0;//get_morton_offset(x, y, 4) + coarse_y * texture->pow2_w * 4;
+		u32 offset = get_morton_offset(x, y, 4) + coarse_y * texture->pow2_w * 4;
 		*(u32 *)(texture->data + offset) = __builtin_bswap32(new_color);
 	} else {
 		((u32 *)texture->data)[x + y * texture->pow2_w] = __builtin_bswap32(new_color);
@@ -653,7 +671,7 @@ u32 sf2d_get_pixel(sf2d_texture *texture, int x, int y)
 	y = (texture->pow2_h - 1 - y);
 	if (texture->tiled) {
 		u32 coarse_y = y & ~7;
-		u32 offset = 0;//get_morton_offset(x, y, 4) + coarse_y * texture->pow2_w * 4;
+		u32 offset = get_morton_offset(x, y, 4) + coarse_y * texture->pow2_w * 4;
 		return __builtin_bswap32(*(u32 *)(texture->data + offset));
 	} else {
 		return  __builtin_bswap32(((u32 *)texture->data)[x + y * texture->pow2_w]);
