@@ -101,21 +101,40 @@ void sf2d_free_texture(sf2d_texture *texture)
 	}
 }
 
+void sf2d_texture_tile32_hardware(sf2d_texture *texture, const void *data, int w, int h)
+{
+	if (texture->tiled) return;
+    const u32 flags = (GX_TRANSFER_FLIP_VERT(1) | GX_TRANSFER_OUT_TILED(1) | GX_TRANSFER_RAW_COPY(0) |
+        GX_TRANSFER_IN_FORMAT(GX_TRANSFER_FMT_RGBA8) | GX_TRANSFER_OUT_FORMAT(GX_TRANSFER_FMT_RGBA8) |
+        GX_TRANSFER_SCALING(GX_TRANSFER_SCALE_NO));
+
+	GSPGPU_FlushDataCache(data, (w*h)<<2);
+    GX_DisplayTransfer(
+        (u32*)data,
+        GX_BUFFER_DIM(w, h),
+        (u32*)texture->data,
+        GX_BUFFER_DIM(texture->pow2_w, texture->pow2_h),
+        flags
+    );
+    gspWaitForPPF();
+    GSPGPU_InvalidateDataCache(texture->data, texture->data_size);
+	texture->tiled = 1;
+}
+
 void sf2d_fill_texture_from_RGBA8(sf2d_texture *dst, const void *rgba8, int source_w, int source_h)
 {
 	// TODO: add support for non-RGBA8 textures
 
-	u8 *tmp = linearAlloc(dst->pow2_w * dst->pow2_h * 4);
+	u8 *tmp = linearAlloc((dst->pow2_w * dst->pow2_h)<<2);
 	int i, j;
 	for (i = 0; i < source_h; i++) {
 		for (j = 0; j < source_w; j++) {
-			((u32 *)tmp)[i*dst->pow2_w + j] = ((u32 *)rgba8)[i*source_w + j];
+			((u32 *)tmp)[i*dst->pow2_w + j] = __builtin_bswap32(((u32 *)rgba8)[i*source_w + j]);
 		}
 	}
-	memcpy(dst->data, tmp, dst->pow2_w*dst->pow2_h*4);
+	sf2d_texture_tile32_hardware(dst, tmp, dst->pow2_w, dst->pow2_h);
 	linearFree(tmp);
 
-	sf2d_texture_tile32(dst);
 }
 
 sf2d_texture *sf2d_create_texture_mem_RGBA8(const void *src_buffer, int src_w, int src_h, sf2d_texfmt pixel_format, sf2d_place place)
@@ -617,30 +636,12 @@ void sf2d_draw_quad_uv(const sf2d_texture *texture, float left, float top, float
 	GPU_DrawArray(GPU_TRIANGLE_STRIP, 0, 4);
 }
 
-// Grabbed from Citra Emulator (citra/src/video_core/utils.h)
-static inline u32 morton_interleave(u32 x, u32 y)
-{
-	u32 i = (x & 7) | ((y & 7) << 8); // ---- -210
-	i = (i ^ (i << 2)) & 0x1313;      // ---2 --10
-	i = (i ^ (i << 1)) & 0x1515;      // ---2 -1-0
-	i = (i | (i >> 7)) & 0x3F;
-	return i;
-}
-
-//Grabbed from Citra Emulator (citra/src/video_core/utils.h)
-static inline u32 get_morton_offset(u32 x, u32 y, u32 bytes_per_pixel)
-{
-    u32 i = morton_interleave(x, y);
-    unsigned int offset = (x & ~7) * 8;
-    return (i + offset) * bytes_per_pixel;
-}
-
 void sf2d_set_pixel(sf2d_texture *texture, int x, int y, u32 new_color)
 {
 	y = (texture->pow2_h - 1 - y);
 	if (texture->tiled) {
 		u32 coarse_y = y & ~7;
-		u32 offset = get_morton_offset(x, y, 4) + coarse_y * texture->pow2_w * 4;
+		u32 offset = 0;//get_morton_offset(x, y, 4) + coarse_y * texture->pow2_w * 4;
 		*(u32 *)(texture->data + offset) = __builtin_bswap32(new_color);
 	} else {
 		((u32 *)texture->data)[x + y * texture->pow2_w] = __builtin_bswap32(new_color);
@@ -652,35 +653,9 @@ u32 sf2d_get_pixel(sf2d_texture *texture, int x, int y)
 	y = (texture->pow2_h - 1 - y);
 	if (texture->tiled) {
 		u32 coarse_y = y & ~7;
-		u32 offset = get_morton_offset(x, y, 4) + coarse_y * texture->pow2_w * 4;
+		u32 offset = 0;//get_morton_offset(x, y, 4) + coarse_y * texture->pow2_w * 4;
 		return __builtin_bswap32(*(u32 *)(texture->data + offset));
 	} else {
 		return  __builtin_bswap32(((u32 *)texture->data)[x + y * texture->pow2_w]);
 	}
-}
-
-
-void sf2d_texture_tile32(sf2d_texture *texture)
-{
-	if (texture->tiled) return;
-
-	// TODO: add support for non-RGBA8 textures
-	u8 *tmp = linearAlloc(texture->pow2_w * texture->pow2_h * 4);
-
-	int i, j;
-	for (j = 0; j < texture->pow2_h; j++) {
-		for (i = 0; i < texture->pow2_w; i++) {
-
-			u32 coarse_y = j & ~7;
-			u32 dst_offset = get_morton_offset(i, j, 4) + coarse_y * texture->pow2_w * 4;
-
-			u32 v = ((u32 *)texture->data)[i + (texture->pow2_h - 1 - j)*texture->pow2_w];
-			*(u32 *)(tmp + dst_offset) = __builtin_bswap32(v);
-		}
-	}
-
-	memcpy(texture->data, tmp, texture->pow2_w*texture->pow2_h*4);
-	linearFree(tmp);
-
-	texture->tiled = 1;
 }
