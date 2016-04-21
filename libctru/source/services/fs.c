@@ -1080,7 +1080,7 @@ Result FSUSER_GetSdmcCtrRootPath(u8* out, u32 length)
 	return cmdbuf[1];
 }
 
-Result FSUSER_GetArchiveResource(FS_ArchiveResource* archiveResource, FS_MediaType mediaType)
+Result FSUSER_GetArchiveResource(FS_ArchiveResource* archiveResource, FS_SystemMediaType mediaType)
 {
 	u32 *cmdbuf = getThreadCommandBuffer();
 
@@ -1407,7 +1407,7 @@ Result FSUSER_SwitchCleanupInvalidSaveData(bool enable)
 	return cmdbuf[1];
 }
 
-Result FSUSER_EnumerateSystemSaveData(u32* idsWritten, u32 idsSize, u64* ids)
+Result FSUSER_EnumerateSystemSaveData(u32* idsWritten, u32 idsSize, u32* ids)
 {
 	u32 *cmdbuf = getThreadCommandBuffer();
 
