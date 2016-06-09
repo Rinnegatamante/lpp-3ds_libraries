@@ -4,7 +4,7 @@
 #include "sf2d.h"
 #include "sf2d_private.h"
 
-#define TEX_MIN_SIZE 8
+#define TEX_MIN_SIZE 32
 
 static unsigned int nibbles_per_pixel(sf2d_texfmt format)
 {
