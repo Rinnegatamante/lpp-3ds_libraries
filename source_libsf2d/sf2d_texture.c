@@ -4,7 +4,8 @@
 #include "sf2d.h"
 #include "sf2d_private.h"
 
-#define TEX_MIN_SIZE 32
+#define TEX_MIN_SIZE 8
+#define HARD_TEX_MIN_SIZE 32
 
 static unsigned int nibbles_per_pixel(sf2d_texfmt format)
 {
@@ -124,15 +125,25 @@ void sf2d_texture_tile32_hardware(sf2d_texture *texture, const void *data, int w
 void sf2d_fill_texture_from_RGBA8(sf2d_texture *dst, const void *rgba8, int source_w, int source_h)
 {
 	// TODO: add support for non-RGBA8 textures
-
 	u8 *tmp = linearAlloc((dst->pow2_w * dst->pow2_h)<<2);
-	int i, j;
-	for (i = 0; i < source_h; i++) {
-		for (j = 0; j < source_w; j++) {
-			((u32 *)tmp)[i*dst->pow2_w + j] = __builtin_bswap32(((u32 *)rgba8)[i*source_w + j]);
+	if (dst->pow2_w <= HARD_TEX_MIN_SIZE || dst->pow2_h <= HARD_TEX_MIN_SIZE){
+		int i, j;
+		for (i = 0; i < source_h; i++) {
+			for (j = 0; j < source_w; j++) {
+				((u32 *)tmp)[i*dst->pow2_w + j] = ((u32 *)rgba8)[i*source_w + j];
+			}
 		}
+		memcpy(dst->data, tmp, dst->pow2_w*dst->pow2_h*4);
+		sf2d_texture_tile32(dst);
+	}else{
+		int i, j;
+		for (i = 0; i < source_h; i++) {
+			for (j = 0; j < source_w; j++) {
+				((u32 *)tmp)[i*dst->pow2_w + j] = __builtin_bswap32(((u32 *)rgba8)[i*source_w + j]);
+			}
+		}
+		sf2d_texture_tile32_hardware(dst, tmp, dst->pow2_w, dst->pow2_h);
 	}
-	sf2d_texture_tile32_hardware(dst, tmp, dst->pow2_w, dst->pow2_h);
 	linearFree(tmp);
 
 }
@@ -676,4 +687,30 @@ u32 sf2d_get_pixel(sf2d_texture *texture, int x, int y)
 	} else {
 		return  __builtin_bswap32(((u32 *)texture->data)[x + y * texture->pow2_w]);
 	}
+}
+
+
+void sf2d_texture_tile32(sf2d_texture *texture)
+{
+	if (texture->tiled) return;
+
+	// TODO: add support for non-RGBA8 textures
+	u8 *tmp = linearAlloc(texture->pow2_w * texture->pow2_h * 4);
+
+	int i, j;
+	for (j = 0; j < texture->pow2_h; j++) {
+		for (i = 0; i < texture->pow2_w; i++) {
+
+			u32 coarse_y = j & ~7;
+			u32 dst_offset = get_morton_offset(i, j, 4) + coarse_y * texture->pow2_w * 4;
+
+			u32 v = ((u32 *)texture->data)[i + (texture->pow2_h - 1 - j)*texture->pow2_w];
+			*(u32 *)(tmp + dst_offset) = __builtin_bswap32(v); /* RGBA8 -> ABGR8 */
+		}
+	}
+
+	memcpy(texture->data, tmp, texture->pow2_w*texture->pow2_h*4);
+	linearFree(tmp);
+
+	texture->tiled = 1;
 }
