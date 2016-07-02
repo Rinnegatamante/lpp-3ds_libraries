@@ -1,0 +1,194 @@
+src/mpg123.o: src/mpg123.c src/mpg123app.h src/config.h \
+ src/compat/compat.h src/config.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\errno.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\errno.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\reent.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\_ansi.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\newlib.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\config.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\machine\ieeefp.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\features.h \
+ c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include\stddef.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\_types.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\machine\_types.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\machine\_default_types.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\lock.h \
+ c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include\stdint.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\stdint.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\_intsup.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\stdlib.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\_ansi.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\cdefs.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\machine\stdlib.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\alloca.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\stdio.h \
+ c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include\stdarg.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\types.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\machine\types.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\stdio.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\math.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\machine\fastmath.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\signal.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\signal.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\unistd.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\unistd.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\inttypes.h \
+ c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include-fixed\limits.h \
+ c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include-fixed\syslimits.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\limits.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\string.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\string.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\strings.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\time.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\fcntl.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\fcntl.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\_default_fcntl.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\stat.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\time.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\machine\time.h \
+ src/libmpg123/true.h src/httpget.h src/libmpg123/mpg123.h \
+ src/libmpg123/fmt123.h src/local.h src/libout123/out123.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\wait.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\resource.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sched.h \
+ c:\devkitpro\devkitarm\arm-none-eabi\include\sys\sched.h src/common.h \
+ src/sysutil.h src/getlopt.h src/term.h src/audio.h src/playlist.h \
+ src/metaprint.h src/streamdump.h src/libmpg123/debug.h
+
+src/mpg123app.h:
+
+src/config.h:
+
+src/compat/compat.h:
+
+src/config.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\errno.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\errno.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\reent.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\_ansi.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\newlib.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\config.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\machine\ieeefp.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\features.h:
+
+c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include\stddef.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\_types.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\machine\_types.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\machine\_default_types.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\lock.h:
+
+c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include\stdint.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\stdint.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\_intsup.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\stdlib.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\_ansi.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\cdefs.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\machine\stdlib.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\alloca.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\stdio.h:
+
+c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include\stdarg.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\types.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\machine\types.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\stdio.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\math.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\machine\fastmath.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\signal.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\signal.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\unistd.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\unistd.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\inttypes.h:
+
+c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include-fixed\limits.h:
+
+c:\devkitpro\devkitarm\lib\gcc\arm-none-eabi\5.3.0\include-fixed\syslimits.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\limits.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\string.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\string.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\strings.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\time.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\fcntl.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\fcntl.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\_default_fcntl.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\stat.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\time.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\machine\time.h:
+
+src/libmpg123/true.h:
+
+src/httpget.h:
+
+src/libmpg123/mpg123.h:
+
+src/libmpg123/fmt123.h:
+
+src/local.h:
+
+src/libout123/out123.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\wait.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\resource.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sched.h:
+
+c:\devkitpro\devkitarm\arm-none-eabi\include\sys\sched.h:
+
+src/common.h:
+
+src/sysutil.h:
+
+src/getlopt.h:
+
+src/term.h:
+
+src/audio.h:
+
+src/playlist.h:
+
+src/metaprint.h:
+
+src/streamdump.h:
+
+src/libmpg123/debug.h:

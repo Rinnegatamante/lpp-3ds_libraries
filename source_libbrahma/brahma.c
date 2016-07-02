@@ -10,7 +10,7 @@
 #include <arpa/inet.h>
 #include "brahma.h"
 #include "exploitdata.h"
-#include "../khax/khax.h"
+#include "../source_libkhax/khax.h"
 
 static u8  *g_ext_arm9_buf;
 static u32 g_ext_arm9_size = 0;

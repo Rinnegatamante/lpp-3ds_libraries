@@ -16,10 +16,10 @@ include $(DEVKITARM)/3ds_rules
 # DATA is a list of directories containing data files
 # INCLUDES is a list of directories containing header files
 #---------------------------------------------------------------------------------
-TARGET		:=	generic_lib
+TARGET		:=	brahma
 BUILD		:=	build
-SOURCES		:=	source
-DATA		:=	data
+SOURCES		:=	source_lib$(TARGET)
+DATA		:=	data_lib$(TARGET)
 INCLUDES	:=	include
 
 #---------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ CFLAGS	:=	-g -O2 -mword-relocations \
 			-fomit-frame-pointer -ffast-math \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS -DLODEPNG_NO_COMPILE_ENCODER -DLUA_C89_NUMBERS -DLIBCTRU_NO_DEPRECATION
+CFLAGS	+=	$(INCLUDE) -DHAVEMPG_123 -DARM11 -D_3DS -DLODEPNG_NO_COMPILE_ENCODER -DLUA_C89_NUMBERS -DLIBCTRU_NO_DEPRECATION
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11 -fpermissive  -Wno-write-strings
 
